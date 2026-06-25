@@ -1,8 +1,8 @@
 *.home.kyleerhabor.com {
   tls {
     dns porkbun {
-      api_key {$PORKBUN_API_KEY}
-      api_secret {$PORKBUN_API_SECRET}
+      api_key {env.PORKBUN_API_KEY}
+      api_secret_key {env.PORKBUN_SECRET_KEY}
     }
   }
 

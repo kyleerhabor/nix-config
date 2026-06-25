@@ -1,4 +1,6 @@
 { pkgs, ... }: let
+  # I don't see a way to include secrets without requiring impure evaluation.
+  local = import /Users/kyleerhabor/.config/nix-config/local.nix;
   gitignore = pkgs.writeText "global-gitignore" (builtins.readFile ./kyleerhabor/resources/git/ignore);
   caddyfile = pkgs.writeText "Caddyfile" (builtins.readFile ./kyleerhabor/resources/caddy/Caddyfile);
   organizationID = "com.kyleerhabor";
@@ -41,4 +43,6 @@ in {
   launchd.agents.caddy.config.KeepAlive = true;
   launchd.agents.caddy.config.StandardOutPath = caddyDaemonStandardFile;
   launchd.agents.caddy.config.StandardErrorPath = caddyDaemonStandardFile;
+  launchd.agents.caddy.config.EnvironmentVariables.PORKBUN_API_KEY = local.home.kyleerhabor.porkbun.apiKey;
+  launchd.agents.caddy.config.EnvironmentVariables.PORKBUN_SECRET_KEY = local.home.kyleerhabor.porkbun.secretKey;
 }

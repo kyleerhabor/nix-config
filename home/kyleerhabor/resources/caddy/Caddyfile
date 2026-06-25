@@ -1,0 +1,22 @@
+*.home.kyleerhabor.com {
+  tls {
+    dns porkbun {
+      api_key {$PORKBUN_API_KEY}
+      api_secret {$PORKBUN_API_SECRET}
+    }
+  }
+
+  @navidrome host navidrome.home.kyleerhabor.com
+  handle @navidrome {
+    reverse_proxy localhost:4533
+  }
+
+  @komga host komga.home.kyleerhabor.com
+  handle @komga {
+    reverse_proxy localhost:25600
+  }
+
+  handle {
+    abort
+  }
+}

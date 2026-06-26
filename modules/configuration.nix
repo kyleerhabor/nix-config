@@ -2,27 +2,24 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
 
-  # For some reason, including vscode causes Nix to pull in glibc, which is unsupported.
-  #
   # python313 exists, but I can't use pip to install packages, which is bad for packages like yt-dlp which regularly update.
   environment.systemPackages = with pkgs; [
     (clojure.override { jdk = jdk25_headless; })
-    fastfetch # I don't know what the difference between this and fastfetchMinimal is.
+    fastfetch
     ffmpeg-full
+    jetbrains.idea
     lua54Packages.fennel
     mediainfo
     mpv
     neovim-unwrapped
     nixd
-    # nodejs_24
+    nodejs_latest # TODO: Move to project configuration.
     nushell
     pyenv
     rustup
     smartmontools
     sqlitebrowser
-    # subversion # Used to clone XLD once.
     tree
-    # unrar
     vscode
   ];
 

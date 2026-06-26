@@ -2,6 +2,7 @@
   # I don't see a way to include secrets without requiring impure evaluation.
   local = import /Users/kyleerhabor/.config/nix-config/local.nix;
   gitignore = pkgs.writeText "global-gitignore" (builtins.readFile ./kyleerhabor/resources/git/ignore);
+  navidromeConfigurationFile = pkgs.writeText "navidrome.toml" (builtins.readFile ./kyleerhabor/resources/navidrome/navidrome.toml);
   caddyfile = pkgs.writeText "Caddyfile" (builtins.readFile ./kyleerhabor/resources/caddy/Caddyfile);
   organizationID = "com.kyleerhabor";
 
@@ -10,7 +11,10 @@
   logDirectory = "${homeDirectory}/Library/Logs";
 
   # Daemons
-  caddyDaemonID = "${organizationID}.caddy";
+  navidromeDaemonID = "${organizationID}.nix-config.navidrome";
+  navidromeDaemonStandardFile = "${logDirectory}/${navidromeDaemonID}.log";
+  komgaDaemonID = "${organizationID}.nix-config.komga";
+  caddyDaemonID = "${organizationID}.nix-config.caddy";
   caddyDaemonStandardFile = "${logDirectory}/${caddyDaemonID}.log";
 
   # Packages
@@ -29,6 +33,29 @@ in {
 
   # Enable Nushell integration.
   programs.nushell.enable = true;
+
+  # Navidrome (4533)
+  launchd.agents.navidrome.enable = true;
+  launchd.agents.navidrome.config.Label = navidromeDaemonID;
+  launchd.agents.navidrome.config.ProgramArguments = [
+    "${pkgs.navidrome}/bin/navidrome"
+    "--configfile" "${navidromeConfigurationFile}"
+  ];
+
+  launchd.agents.navidrome.config.RunAtLoad = true;
+  launchd.agents.navidrome.config.KeepAlive = true;
+  launchd.agents.navidrome.config.StandardOutPath = navidromeDaemonStandardFile;
+  launchd.agents.navidrome.config.StandardErrorPath = navidromeDaemonStandardFile;
+
+  # Komga (25600)
+  launchd.agents.komga.enable = true;
+  launchd.agents.komga.config.Label = komgaDaemonID;
+  launchd.agents.komga.config.ProgramArguments = [
+    "${pkgs.komga}/bin/komga"
+  ];
+
+  launchd.agents.komga.config.RunAtLoad = true;
+  launchd.agents.komga.config.KeepAlive = true;
 
   # Caddy
   launchd.agents.caddy.enable = true;

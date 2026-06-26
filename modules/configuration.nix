@@ -1,15 +1,4 @@
-{ pkgs, inputs, ... }: let
-  organizationID = "com.kyleerhabor";
-  homeDirectory = "/Users/kyleerhabor";
-
-  # Paths
-  logDirectory = "${homeDirectory}/Library/Logs";
-  navidromeConfigurationFile = pkgs.writeText "navidrome-config.toml" (builtins.readFile ./configuration/resources/navidrome/navidrome.toml);
-
-  # Daemons
-  navidromeDaemonID = "${organizationID}.navidrome";
-  navidromeDaemonStandardFile = "${logDirectory}/${navidromeDaemonID}.access.log";
-in {
+{ pkgs, inputs, ... }: {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
 
@@ -17,7 +6,7 @@ in {
   #
   # python313 exists, but I can't use pip to install packages, which is bad for packages like yt-dlp which regularly update.
   environment.systemPackages = with pkgs; [
-    (clojure.override { jdk = temurin-bin-25; })
+    (clojure.override { jdk = jdk25_headless; })
     fastfetch # I don't know what the difference between this and fastfetchMinimal is.
     ffmpeg-full
     lua54Packages.fennel
@@ -36,20 +25,6 @@ in {
     # unrar
     vscode
   ];
-
-  # Navidrome
-  launchd.user.agents.navidrome.serviceConfig.Label = navidromeDaemonID;
-  launchd.user.agents.navidrome.serviceConfig.ProgramArguments = [
-    "${pkgs.navidrome}/bin/navidrome"
-    "--configfile"
-    "${navidromeConfigurationFile}"
-  ];
-
-  launchd.user.agents.navidrome.serviceConfig.RunAtLoad = true;
-  launchd.user.agents.navidrome.serviceConfig.KeepAlive = true;
-  launchd.user.agents.navidrome.serviceConfig.WorkingDirectory = homeDirectory;
-  launchd.user.agents.navidrome.serviceConfig.StandardOutPath = navidromeDaemonStandardFile;
-  launchd.user.agents.navidrome.serviceConfig.StandardErrorPath = navidromeDaemonStandardFile;
 
   # Enable System Settings > Network > Firewall.
   networking.applicationFirewall.enable = true;

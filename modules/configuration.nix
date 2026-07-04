@@ -7,7 +7,6 @@
     (clojure.override { jdk = jdk25_headless; })
     fastfetch
     ffmpeg-full
-    jetbrains.idea
     lua54Packages.fennel
     mediainfo
     mpv

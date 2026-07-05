@@ -1,4 +1,17 @@
 { config, lib, pkgs, ... }: {
+  options.my.apps.transmission = lib.mkOption {
+    type = lib.types.submodule {
+      options.bundleID = lib.mkOption {
+        type = lib.types.str;
+        default = "org.m0k.transmission";
+      };
+      options.bindAddressIPv4 = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+      };
+    };
+    default = {};
+  };
   options.my.user = lib.mkOption {
     type = lib.types.submodule {
       options.name = lib.mkOption { type = lib.types.str; };

@@ -1,4 +1,5 @@
 { config, ... }: {
+  my.apps.transmission.bindAddressIPv4 = "10.74.58.18";
   my.user.name = "kyleerhabor";
   my.servers.navidrome.configurationFile = ./kyles-macbook-pro/servers/navidrome/resources/navidrome.toml;
   my.servers.caddy.caddyfile = ./kyles-macbook-pro/servers/caddy/resources/Caddyfile;

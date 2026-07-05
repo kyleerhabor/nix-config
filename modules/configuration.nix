@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ config, pkgs, inputs, ... }: {
   # TODO: Figure out how to suppress this warning:
   #
   #   evaluation warning: Nixpkgs 26.05 will be the last release to support x86_64-darwin; see
@@ -73,6 +73,7 @@
 
   # etc.
   system.defaults.CustomUserPreferences."com.apple.Safari".FindOnPageMatchesWordStartsOnly = false;
+  system.defaults.CustomUserPreferences."${config.my.apps.transmission.bundleID}".BindAddressIPv4 = config.my.apps.transmission.bindAddressIPv4;
   system.defaults.CustomUserPreferences.NSGlobalDomain.NSZoomButtonShowMenu = false;
 
   # Enable Homebrew integration.

@@ -52,6 +52,29 @@
   # Enable using Touch ID for sudo.
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  # System Defaults
+  #
+  # This should be limited to options the user can't set in the system UI.
+
+  # Sets the speed of the autohide delay.
+  system.defaults.dock.autohide-delay = 0.0;
+
+  # Disable highlight hover effect for the grid view of a stack in the Dock.
+  system.defaults.dock.mouse-over-hilite-stack = false;
+
+  # Whether to show icons on the desktop or not.
+  system.defaults.finder.CreateDesktop = false;
+
+  # Whether to allow quitting of the Finder.
+  system.defaults.finder.QuitMenuItem = true;
+
+  # Resize columns to fit filenames.
+  system.defaults.finder._FXEnableColumnAutoSizing = true;
+
+  # etc.
+  system.defaults.CustomUserPreferences."com.apple.Safari".FindOnPageMatchesWordStartsOnly = false;
+  system.defaults.CustomUserPreferences.NSGlobalDomain.NSZoomButtonShowMenu = false;
+
   # Enable Homebrew integration.
   homebrew.enable = true;
   homebrew.brews = [

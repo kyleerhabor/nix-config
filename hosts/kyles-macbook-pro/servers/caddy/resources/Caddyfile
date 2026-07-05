@@ -1,4 +1,4 @@
-*.home.kyleerhabor.com {
+*.mbp2019.home.kyleerhabor.com {
   tls {
     dns porkbun {
       api_key {env.PORKBUN_API_KEY}
@@ -6,12 +6,17 @@
     }
   }
 
-  @navidrome host navidrome.home.kyleerhabor.com
+  @navidrome host navidrome.mbp2019.home.kyleerhabor.com
   handle @navidrome {
     reverse_proxy localhost:4533
   }
 
-  @komga host komga.home.kyleerhabor.com
+  @vite host vite.mbp2019.home.kyleerhabor.com
+  handle @vite {
+    reverse_proxy localhost:5173
+  }
+
+  @komga host komga.mbp2019.home.kyleerhabor.com
   handle @komga {
     reverse_proxy localhost:25600
   }

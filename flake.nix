@@ -17,8 +17,9 @@
     # $ darwin-rebuild build --flake .#Kyles-MacBook-Pro
     darwinConfigurations."Kyles-MacBook-Pro" = nix-darwin.lib.darwinSystem {
       modules = [
-        ./modules/configuration.nix
         home-manager.darwinModules.home-manager
+        ./modules/options.nix
+        ./modules/configuration.nix
         ./hosts/kyles-macbook-pro.nix
       ];
       specialArgs = { inherit inputs; };

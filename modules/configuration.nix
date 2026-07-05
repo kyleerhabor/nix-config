@@ -1,8 +1,14 @@
 { pkgs, inputs, ... }: {
-  nixpkgs.config.allowUnfree = true;
+  # TODO: Figure out how to suppress this warning:
+  #
+  #   evaluation warning: Nixpkgs 26.05 will be the last release to support x86_64-darwin; see
+  #   https://nixos.org/manual/nixpkgs/unstable/release-notes#x86_64-darwin-26.05
+  #
+  # For some reason, setting nixpkgs.config.allowUnsupportedSystem = true; doesn't work.
   nixpkgs.config.allowBroken = true;
+  nixpkgs.config.allowUnfree = true;
 
-  # python313 exists, but I can't use pip to install packages, which is bad for packages like yt-dlp which regularly update.
+  # python313 exists, but I can't use pip to install packages, which is bad for packages like yt-dlp which update frequently.
   environment.systemPackages = with pkgs; [
     (clojure.override { jdk = jdk25_headless; })
     fastfetch
@@ -21,9 +27,6 @@
     tree
     vscode
   ];
-
-  # Enable System Settings > Network > Firewall.
-  networking.applicationFirewall.enable = true;
 
   # Allow built-in software to receive incoming connections.
   networking.applicationFirewall.allowSigned = true;

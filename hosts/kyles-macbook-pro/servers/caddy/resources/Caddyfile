@@ -1,3 +1,11 @@
+{
+  log {
+    format console {
+      level_format lower
+    }
+  }
+}
+
 *.mbp2019.home.kyleerhabor.com {
   tls {
     dns porkbun {

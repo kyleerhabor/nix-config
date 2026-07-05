@@ -1,8 +1,4 @@
-{ config, ... }: let
-  # I don't see a way to include secrets without requiring impure evaluation.
-  # navidrome = pkgs.writeText "navidrome.toml" (builtins.readFile ../resources/hosts/kyles-macbook-pro/navidrome/navidrome.toml);
-  # caddyfile = pkgs.writeText "Caddyfile" (builtins.readFile ../resources/hosts/kyles-macbook-pro/caddy/Caddyfile);
-in {
+{ config, ... }: {
   my.user.name = "kyleerhabor";
   my.servers.navidrome.configurationFile = ./kyles-macbook-pro/servers/navidrome/resources/navidrome.toml;
   my.servers.caddy.caddyfile = ./kyles-macbook-pro/servers/caddy/resources/Caddyfile;
@@ -29,8 +25,8 @@ in {
   };
 
   imports = [
-    ./kyles-macbook-pro/servers/navidrome.nix  # 4533
-    ./kyles-macbook-pro/servers/komga.nix      # 25600
     ./kyles-macbook-pro/servers/caddy.nix
+    ./kyles-macbook-pro/servers/komga.nix
+    ./kyles-macbook-pro/servers/navidrome.nix
   ];
 }

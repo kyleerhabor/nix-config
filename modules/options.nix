@@ -53,13 +53,14 @@
       };
       options.komga = lib.mkOption {
         type = lib.types.submodule {
-          options.package = lib.mkOption {
-            type = lib.types.package;
-            default = pkgs.komga;
-          };
+          options.configurationFile = lib.mkOption { type = lib.types.path; };
           options.daemonID = lib.mkOption {
             type = lib.types.str;
             default = "com.kyleerhabor.nix-config.komga";
+          };
+          options.package = lib.mkOption {
+            type = lib.types.package;
+            default = pkgs.komga;
           };
         };
         default = {};

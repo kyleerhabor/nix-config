@@ -1,8 +1,9 @@
 { config, ... }: {
   my.apps.transmission.bindAddressIPv4 = "10.74.58.18";
   my.user.name = "kyleerhabor";
-  my.servers.navidrome.configurationFile = ./kyles-macbook-pro/servers/navidrome/resources/navidrome.toml;
   my.servers.caddy.caddyfile = ./kyles-macbook-pro/servers/caddy/resources/Caddyfile;
+  my.servers.komga.configurationFile = ./kyles-macbook-pro/servers/komga/resources/application.yml;
+  my.servers.navidrome.configurationFile = ./kyles-macbook-pro/servers/navidrome/resources/navidrome.toml;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

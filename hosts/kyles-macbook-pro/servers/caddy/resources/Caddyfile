@@ -6,30 +6,31 @@
   }
 }
 
-*.mbp2019.home.kyleerhabor.com {
+(porkbun-tls) {
   tls {
+    # TODO: Figure out how to solve the challenge without disconnecting my VPN for the DNS resolver.
     dns porkbun {
       api_key {env.PORKBUN_API_KEY}
       api_secret_key {env.PORKBUN_SECRET_KEY}
     }
   }
+}
 
-  @navidrome host navidrome.mbp2019.home.kyleerhabor.com
-  handle @navidrome {
-    reverse_proxy localhost:4533
-  }
+# Host-independent
 
-  @vite host vite.mbp2019.home.kyleerhabor.com
-  handle @vite {
-    reverse_proxy localhost:5173
-  }
+navidrome.home.kyleerhabor.com, navidrome.mbp2019.home.kyleerhabor.com {
+  import porkbun-tls
+  reverse_proxy localhost:4533
+}
 
-  @komga host komga.mbp2019.home.kyleerhabor.com
-  handle @komga {
-    reverse_proxy localhost:25600
-  }
+komga.home.kyleerhabor.com, komga.mbp2019.home.kyleerhabor.com {
+  import porkbun-tls
+  reverse_proxy localhost:25600
+}
 
-  handle {
-    abort
-  }
+# Host-dependent
+
+vite.mbp2019.home.kyleerhabor.com {
+  import porkbun-tls
+  reverse_proxy localhost:5173
 }

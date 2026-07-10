@@ -28,12 +28,6 @@
     vscode
   ];
 
-  # Allow built-in software to receive incoming connections.
-  networking.applicationFirewall.allowSigned = true;
-
-  # Allow downloaded signed software to receive incoming connections.
-  networking.applicationFirewall.allowSignedApp = true;
-
   # Automatically run the nix store garbage collector (releasing).
   nix.gc.automatic = true;
 

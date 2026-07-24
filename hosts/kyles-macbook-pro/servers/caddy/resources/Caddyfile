@@ -4,6 +4,13 @@
       level_format lower
     }
   }
+
+  # For some reason, HTTP/2 throughput with my iPhone is ~0.2 MB/s, whereas HTTP/1.1 is ~1 MB/s. I presume this is
+  # because RTT being large (~8 ms) and the window size being small (64 kB) results in a lot of flow control. I'm not
+  # sure where the remaining slowdown comes from, but I suspect it's overhead from Tailscale and WireGuard.
+  servers {
+    protocols h1
+  }
 }
 
 (porkbun-tls) {

@@ -7,6 +7,20 @@
   # For some reason, setting nixpkgs.config.allowUnsupportedSystem = true; doesn't work.
   nixpkgs.config.allowBroken = true;
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [
+    (final: prev: {
+      komga = prev.komga.overrideAttrs (old: {
+        version = "1.25.0";
+        src = final.fetchurl {
+          url = "https://github.com/gotson/komga/releases/download/1.25.0/komga-1.25.0.jar";
+          sha256 = "sha256-NlL5rBpCFbiZ+HHNoOgLE0Ht3lXXul2qIb8rq9qEzhM=";
+        };
+      });
+      mac-mouse-fix = final.callPackage ../packages/mac-mouse-fix.nix {};
+      macos-trash = final.callPackage ../packages/macos-trash.nix {};
+      pi-coding-agent = final.callPackage ../packages/pi-coding-agent.nix {};
+    })
+  ];
 
   # python313 exists, but I can't use pip to install packages, which is bad for packages like yt-dlp which update frequently.
   environment.systemPackages = with pkgs; [
@@ -14,12 +28,14 @@
     fastfetch
     ffmpeg-full
     lua54Packages.fennel
+    macos-trash
     mediainfo
     mpv
     neovim-unwrapped
     nixd
     nodejs_latest # TODO: Move to project configuration.
     nushell
+    pi-coding-agent
     pyenv
     rustup
     smartmontools
@@ -72,21 +88,12 @@
 
   # Enable Homebrew integration.
   homebrew.enable = true;
-  homebrew.brews = [
-    {
-      name = "macos-trash";
-    }
-  ];
-
   homebrew.casks = [
     {
       # For some reason, calibre from Nixpkgs is unsupported on Darwin:
       #
       #   Refusing to evaluate package 'qtwayland-6.11.0' in [...] because it is not available on the requested hostPlatform
       name = "calibre";
-    }
-    {
-      name = "mac-mouse-fix";
     }
   ];
 }

@@ -1,8 +1,4 @@
-{ pkgs, ... }: {
-  home.packages = with pkgs; [
-    mac-mouse-fix
-  ];
-
+{ ... }: {
   # Enable Git integration.
   programs.git.enable = true;
 

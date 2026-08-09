@@ -27,6 +27,9 @@
   };
 
   imports = [
+    ../modules/overrides/komga.nix
+    ../modules/overrides/nushell.nix
+    ../modules/overrides/pi-coding-agent.nix
     ./kyles-macbook-pro/servers/caddy.nix
     ./kyles-macbook-pro/servers/komga.nix
     ./kyles-macbook-pro/servers/navidrome.nix

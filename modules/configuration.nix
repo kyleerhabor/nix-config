@@ -1,4 +1,11 @@
 { config, pkgs, inputs, ... }: {
+  # TODO: Figure out how to suppress this warning:
+  #
+  #   evaluation warning: Nixpkgs 26.05 will be the last release to support x86_64-darwin; see
+  #   https://nixos.org/manual/nixpkgs/unstable/release-notes#x86_64-darwin-26.05
+  #
+  # For some reason, setting nixpkgs.config.allowDeprecatedx86_64Darwin = true; doesn't work.
+
   # List of directories to be symlinked in /run/current-system/sw.
   environment.pathsToLink = ["/share/lua"];
 
@@ -7,9 +14,12 @@
   # We can't include dependencies that are packaged as DMG because there is no public API for Nix (hdiutil is
   # unavailable in Nix, undmg reverse engineers the format, etc.).
   environment.systemPackages = with pkgs; [
+    ffmpeg-full
+    lua54Packages.fennel
     mac-mouse-fix
     macos-trash
     mediamate
+    mpv
     nushell
     opus-tools
     pi-coding-agent
@@ -18,10 +28,7 @@
     # Legacy
     (clojure.override { jdk = jdk25_headless; })
     fastfetch
-    ffmpeg-full
-    lua54Packages.fennel
     mediainfo
-    mpv
     neovim-unwrapped
     nixd
     nodejs_latest # TODO: Move to project configuration.
@@ -59,14 +66,11 @@
       # Suspicious Package is packaged as DMG.
       name = "suspicious-package";
     }
+    {
+      # EtreCheckPro is packaged as DMG.
+      name = "etrecheckpro";
+    }
   ];
-
-  # TODO: Figure out how to suppress this warning:
-  #
-  #   evaluation warning: Nixpkgs 26.05 will be the last release to support x86_64-darwin; see
-  #   https://nixos.org/manual/nixpkgs/unstable/release-notes#x86_64-darwin-26.05
-  #
-  # For some reason, setting nixpkgs.config.allowDeprecatedx86_64Darwin = true; doesn't work.
 
   # Whether to allow unfree packages.
   #

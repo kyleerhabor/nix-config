@@ -15,11 +15,14 @@
 
 (porkbun-tls) {
   tls {
-    # TODO: Figure out how to solve the challenge without disconnecting my VPN for the DNS resolver.
     dns porkbun {
       api_key {env.PORKBUN_API_KEY}
       api_secret_key {env.PORKBUN_SECRET_KEY}
     }
+    # The VPN's DNS doesn't see fresh _acme-challenge TXT records, so pin propagation checks to a public resolver.
+    #
+    # https://docs.quad9.net/services
+    resolvers 2620:fe::fe 9.9.9.9 # dns.quad9.net
   }
 }
 

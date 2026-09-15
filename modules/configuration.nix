@@ -1,29 +1,30 @@
 { config, pkgs, inputs, ... }: {
-  # TODO: Figure out how to suppress this warning:
-  #
-  #   evaluation warning: Nixpkgs 26.05 will be the last release to support x86_64-darwin; see
-  #   https://nixos.org/manual/nixpkgs/unstable/release-notes#x86_64-darwin-26.05
-  #
-  # For some reason, setting nixpkgs.config.allowUnsupportedSystem = true; doesn't work.
-  nixpkgs.config.allowBroken = true;
-  nixpkgs.config.allowUnfree = true;
+  # List of directories to be symlinked in /run/current-system/sw.
+  environment.pathsToLink = ["/share/lua"];
 
-  # python313 exists, but I can't use pip to install packages, which is bad for packages like yt-dlp which update
-  # frequently.
+  # The set of packages that appear in /run/current-system/sw.
+  #
+  # We can't include dependencies that are packaged as DMG because there is no public API for Nix (hdiutil is
+  # unavailable in Nix, undmg reverse engineers the format, etc.).
   environment.systemPackages = with pkgs; [
+    mac-mouse-fix
+    macos-trash
+    mediamate
+    nushell
+    opus-tools
+    pi-coding-agent
+    secretive
+
+    # Legacy
     (clojure.override { jdk = jdk25_headless; })
     fastfetch
     ffmpeg-full
     lua54Packages.fennel
-    mac-mouse-fix
-    macos-trash
     mediainfo
     mpv
     neovim-unwrapped
     nixd
     nodejs_latest # TODO: Move to project configuration.
-    nushell
-    pi-coding-agent
     pyenv
     rustup
     smartmontools
@@ -32,23 +33,48 @@
     vscode
   ];
 
-  # Automatically run the nix store garbage collector (releasing).
-  nix.gc.automatic = true;
+  # Whether to enable nix-darwin to manage installing/updating/upgrading Homebrew taps, formulae, casks, Mac App Store
+  # apps, Visual Studio Code extensions, Go packages, and Cargo crates using Homebrew Bundle.
+  homebrew.enable = true;
 
-  # Automatically run the nix store optimizer (compacting).
-  nix.optimise.automatic = true;
+  # List of Homebrew casks to install.
+  homebrew.casks = [
+    {
+      # Calibre is packaged as DMG.
+      name = "calibre";
+    }
+    {
+      # MusicBrainz Picard is packaged as DMG.
+      name = "musicbrainz-picard";
+    }
+    {
+      # OnyX is packaged as DMG.
+      name = "onyx";
+    }
+    {
+      # Shottr is packaged as DMG.
+      name = "shottr";
+    }
+    {
+      # Suspicious Package is packaged as DMG.
+      name = "suspicious-package";
+    }
+  ];
 
-  # Necessary for using flakes on this system.
-  nix.settings.experimental-features = "nix-command flakes";
+  # TODO: Figure out how to suppress this warning:
+  #
+  #   evaluation warning: Nixpkgs 26.05 will be the last release to support x86_64-darwin; see
+  #   https://nixos.org/manual/nixpkgs/unstable/release-notes#x86_64-darwin-26.05
+  #
+  # For some reason, setting nixpkgs.config.allowDeprecatedx86_64Darwin = true; doesn't work.
 
-  # Set Git commit hash for darwin-version.
-  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+  # Whether to allow unfree packages.
+  #
+  # We could use allowUnfreePackages, but given that we're not distributing, it's simpler to allow all unfree software.
+  nixpkgs.config.allowUnfree = true;
 
-  # Enable showing keystrokes when using sudo.
-  security.sudo.extraConfig = "Defaults pwfeedback";
-
-  # Enable using Touch ID for sudo.
-  security.pam.services.sudo_local.touchIdAuth = true;
+  # Specify how to handle packages with problems.
+  nixpkgs.config.problems.handlers.navidrome.broken = "warn";
 
   # System Defaults
   #
@@ -74,19 +100,27 @@
   system.defaults.CustomUserPreferences."${config.my.apps.transmission.bundleID}".BindAddressIPv4 = config.my.apps.transmission.bindAddressIPv4;
   system.defaults.CustomUserPreferences.NSGlobalDomain.NSZoomButtonShowMenu = false;
 
-  # Enable Homebrew integration.
-  homebrew.enable = true;
-  homebrew.casks = [
-    {
-      # For some reason, calibre from Nixpkgs is unsupported on Darwin:
-      #
-      #   Refusing to evaluate package 'qtwayland-6.11.0' in [...] because it is not available on the requested hostPlatform
-      name = "calibre";
-    }
-  ];
+  # Automatically run the nix store garbage collector (releasing).
+  nix.gc.automatic = true;
+
+  # Automatically run the nix store optimizer (compacting).
+  nix.optimise.automatic = true;
+
+  # Necessary for using flakes on this system.
+  nix.settings.experimental-features = "nix-command flakes";
+
+  # Set Git commit hash for darwin-version.
+  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+
+  # Enable showing keystrokes when using sudo.
+  security.sudo.extraConfig = "Defaults pwfeedback";
+
+  # Enable using Touch ID for sudo.
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   imports = [
     ./overrides/mac-mouse-fix.nix
     ./overrides/macos-trash.nix
+    ./overrides/mpv.nix
   ];
 }

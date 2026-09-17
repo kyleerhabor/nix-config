@@ -16,8 +16,7 @@
 (porkbun-tls) {
   tls {
     dns porkbun {
-      api_key {env.PORKBUN_API_KEY}
-      api_secret_key {env.PORKBUN_SECRET_KEY}
+      import /run/secrets/rendered/porkbun-keys.caddyfile
     }
     # The VPN's DNS doesn't see fresh _acme-challenge TXT records, so pin propagation checks to a public resolver.
     #

@@ -1,0 +1,5 @@
+keys:
+  - &mbp2019 age1mp99avgl57lrsghk3mr35x0d3kdj055jdtaqtjej5xfxleanlq5qq8maeg
+creation_rules:
+  - path_regex: hosts/kyles-macbook-pro/secrets/[^/]+\.yaml$
+    age: *mbp2019

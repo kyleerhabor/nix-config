@@ -14,6 +14,7 @@
   # We can't include dependencies that are packaged as DMG because there is no public API for Nix (hdiutil is
   # unavailable in Nix, undmg reverse engineers the format, etc.).
   environment.systemPackages = with pkgs; [
+    age
     ffmpeg-full
     lua54Packages.fennel
     mac-mouse-fix

@@ -15,7 +15,7 @@
   options.my.user = lib.mkOption {
     type = lib.types.submodule {
       options.name = lib.mkOption { type = lib.types.str; };
-      options.directories = lib.mkOption {
+      options.paths = lib.mkOption {
         type = lib.types.submodule {
           options.home = lib.mkOption {
             type = lib.types.str;
@@ -23,7 +23,11 @@
           };
           options.logs = lib.mkOption {
             type = lib.types.str;
-            default = "${config.my.user.directories.home}/Library/Logs";
+            default = "${config.my.user.paths.home}/Library/Logs";
+          };
+          options.sopsAgeKey = lib.mkOption {
+            type = lib.types.str;
+            default =  "${config.my.user.paths.home}/Library/Application Support/sops/age/keys.txt";
           };
         };
         default = {};
@@ -42,7 +46,7 @@
           };
           options.daemonStandardFile = lib.mkOption {
             type = lib.types.str;
-            default = "${config.my.user.directories.logs}/${config.my.servers.navidrome.daemonID}.log";
+            default = "${config.my.user.paths.logs}/${config.my.servers.navidrome.daemonID}.log";
           };
           options.package = lib.mkOption {
             type = lib.types.package;
@@ -74,7 +78,7 @@
           };
           options.daemonStandardFile = lib.mkOption {
             type = lib.types.str;
-            default = "${config.my.user.directories.logs}/${config.my.servers.caddy.daemonID}.log";
+            default = "${config.my.user.paths.logs}/${config.my.servers.caddy.daemonID}.log";
           };
           options.package = lib.mkOption {
             type = lib.types.package;

@@ -11,13 +11,17 @@
     # home-manager.url = "github:nix-community/home-manager";
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = inputs@{ nix-darwin, home-manager, ... }: {
+  outputs = inputs@{ nix-darwin, home-manager, sops-nix, ... }: {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#Kyles-MacBook-Pro
     darwinConfigurations."Kyles-MacBook-Pro" = nix-darwin.lib.darwinSystem {
       modules = [
         home-manager.darwinModules.home-manager
+        sops-nix.darwinModules.sops
         ./modules/options.nix
         ./modules/configuration.nix
         ./hosts/kyles-macbook-pro.nix

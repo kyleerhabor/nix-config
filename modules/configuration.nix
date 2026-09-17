@@ -25,6 +25,7 @@
     opus-tools
     pi-coding-agent
     secretive
+    yt-dlp
 
     # Legacy
     (clojure.override { jdk = jdk25_headless; })
@@ -33,7 +34,6 @@
     neovim-unwrapped
     nixd
     nodejs_latest # TODO: Move to project configuration.
-    pyenv
     rustup
     smartmontools
     sqlitebrowser

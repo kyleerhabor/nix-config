@@ -4,7 +4,7 @@ in {
   my.apps.transmission.bindAddressIPv4 = "10.74.58.18";
   my.user.name = "kyleerhabor";
   my.servers.caddy.caddyfile = ./kyles-macbook-pro/servers/caddy/resources/Caddyfile;
-  my.servers.komga.configurationFile = ./kyles-macbook-pro/servers/komga/resources/application.yml;
+  my.servers.komga.configurationFile = ./kyles-macbook-pro/servers/komga/resources/application.yaml;
   my.servers.navidrome.configurationFile = ./kyles-macbook-pro/servers/navidrome/resources/navidrome.toml;
 
   environment.systemPackages = with pkgs; [libjxl_0_12];
@@ -49,6 +49,7 @@ in {
     ../modules/overrides/nushell.nix
     ../modules/overrides/pi-coding-agent.nix
     ../modules/overrides/yt-dlp.nix
+    ../modules/overrides/secretive.nix
     ./kyles-macbook-pro/servers/caddy.nix
     ./kyles-macbook-pro/servers/komga.nix
     ./kyles-macbook-pro/servers/navidrome.nix

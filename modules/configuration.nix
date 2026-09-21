@@ -25,6 +25,7 @@
     opus-tools
     pi-coding-agent
     secretive
+    uv
     yt-dlp
 
     # Legacy
@@ -33,7 +34,7 @@
     mediainfo
     neovim-unwrapped
     nixd
-    nodejs_latest # TODO: Move to project configuration.
+    # nodejs_latest # TODO: Move to project configuration.
     rustup
     smartmontools
     sqlitebrowser

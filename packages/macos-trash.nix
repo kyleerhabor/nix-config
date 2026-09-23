@@ -1,12 +1,16 @@
-{ stdenvNoCC, fetchzip }: stdenvNoCC.mkDerivation {
+{ stdenvNoCC, fetchzip }: let
+  srcVersion = "v3.1.0";
+in stdenvNoCC.mkDerivation {
   pname = "macos-trash";
-  version = "3.0.0";
+  version = "3.1.0";
   src = fetchzip {
-    url = "https://github.com/sindresorhus/macos-trash/releases/download/v3.0.0/trash.zip";
-    hash = "sha256-EUCLgp35Ur+n9HcmwzzLZFIsAyrWCtBGS+CwpF4Oqns=";
+    url = "https://github.com/sindresorhus/macos-trash/releases/download/${srcVersion}/trash.zip";
+    hash = "sha256-e3sEsAPqsJFrFNlxWU4G65xnW+ZnUFXiE7TOspu9E1U=";
   };
-  buildCommand = ''
+  installPhase = ''
+    runHook preInstall
     mkdir -p $out/bin
     install $src/trash $out/bin/trash
+    runHook postInstall
   '';
 }

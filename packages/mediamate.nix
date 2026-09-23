@@ -9,8 +9,10 @@ in stdenvNoCC.mkDerivation {
     hash = "sha256-WQMugby+HvZL1VwZQsY4/dnovN5sX+7tBbb1Tzkaack=";
     stripRoot = false;
   };
-  buildCommand = ''
+  installPhase = ''
+    runHook preInstall
     mkdir -p $out/Applications
     cp -R "$src/MediaMate.app" $out/Applications/
+    runHook postInstall
   '';
 }

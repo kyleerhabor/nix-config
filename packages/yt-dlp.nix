@@ -9,10 +9,12 @@ in stdenvNoCC.mkDerivation {
     hash = "sha256-i8SpWGE94DGJjz5a+o2j7JSZhowvryYWnRYFPDBjT+w=";
     stripRoot = false;
   };
-  buildCommand = ''
+  installPhase = ''
+    runHook preInstall
     mkdir -p $out/libexec/yt-dlp $out/bin
     cp -R $src/_internal $out/libexec/yt-dlp/
     install $src/yt-dlp_macos $out/libexec/yt-dlp/yt-dlp
     ln -s ../libexec/yt-dlp/yt-dlp $out/bin/yt-dlp
+    runHook postInstall
   '';
 }

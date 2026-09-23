@@ -53,6 +53,10 @@
       name = "calibre";
     }
     {
+      # EtreCheckPro is packaged as DMG.
+      name = "etrecheckpro";
+    }
+    {
       # MusicBrainz Picard is packaged as DMG.
       name = "musicbrainz-picard";
     }
@@ -69,8 +73,8 @@
       name = "suspicious-package";
     }
     {
-      # EtreCheckPro is packaged as DMG.
-      name = "etrecheckpro";
+      # Swish is packaged as DMG.
+      name = "swish";
     }
   ];
 

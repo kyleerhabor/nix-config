@@ -8,8 +8,10 @@ in stdenvNoCC.mkDerivation {
     hash = "sha256-s9XcaTv0n9Tscoc33WNwS4738KzDb3gHTZ4JWPBg8WE=";
     stripRoot = false;
   };
-  buildCommand = ''
+  installPhase = ''
+    runHook preInstall
     mkdir -p $out/Applications
     cp -R "$src/Mac Mouse Fix.app" $out/Applications/
+    runHook postInstall
   '';
 }

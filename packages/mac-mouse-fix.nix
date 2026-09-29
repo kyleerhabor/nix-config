@@ -1,4 +1,4 @@
-{ stdenvNoCC, fetchzip }: let
+{ fetchzip, stdenvNoCC }: let
   srcVersion = "3.1.0";
 in stdenvNoCC.mkDerivation {
   pname = "mac-mouse-fix";

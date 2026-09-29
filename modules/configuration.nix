@@ -20,6 +20,7 @@
     mac-mouse-fix
     macos-trash
     mediamate
+    meta
     mpv
     nushell
     opus-tools
@@ -86,6 +87,28 @@
   # Specify how to handle packages with problems.
   nixpkgs.config.problems.handlers.navidrome.broken = "warn";
 
+  # For some reason, Meta needs its parent directory to be writable, otherwise macOS claims that the app is damaged.
+  system.activationScripts.applications.text = pkgs.lib.mkForce ''
+    # Set up applications.
+    targetFolder='/Applications/Nix Apps'
+    echo "setting up ''${targetFolder}..." >&2
+    rm -rf "$targetFolder"
+    mkdir -p "$targetFolder"
+
+    rsyncFlags=(
+      --checksum
+      --copy-unsafe-links
+      --archive
+      --delete
+      --chmod=-w
+      --no-group
+      --no-owner
+      # --chown=kyleerhabor:admin
+    )
+
+    ${pkgs.lib.getExe pkgs.rsync} "''${rsyncFlags[@]}" ${config.system.build.applications}/Applications/ "$targetFolder"
+  '';
+
   # System Defaults
   #
   # This should be limited to options the user can't set in the system UI.
@@ -131,6 +154,7 @@
   imports = [
     ./overrides/mac-mouse-fix.nix
     ./overrides/macos-trash.nix
+    ./overrides/meta.nix
     ./overrides/mpv.nix
   ];
 }

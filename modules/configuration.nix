@@ -17,8 +17,8 @@
     age
     ffmpeg-full
     lua54Packages.fennel
-    mac-mouse-fix
     macos-trash
+    (maven.override { jdk_headless = jdk25_headless; })
     mediamate
     meta
     mpv
@@ -56,6 +56,10 @@
     {
       # EtreCheckPro is packaged as DMG.
       name = "etrecheckpro";
+    }
+    {
+      # Mac Mouse Fix from packages/mac-mouse-fix.nix disables itself on setting up /Applications/Nix Apps...
+      name = "mac-mouse-fix";
     }
     {
       # MusicBrainz Picard is packaged as DMG.
@@ -152,7 +156,6 @@
   security.pam.services.sudo_local.touchIdAuth = true;
 
   imports = [
-    ./overrides/mac-mouse-fix.nix
     ./overrides/macos-trash.nix
     ./overrides/meta.nix
     ./overrides/mpv.nix

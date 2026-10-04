@@ -12,25 +12,25 @@
   # The set of packages that appear in /run/current-system/sw.
   #
   # We can't include dependencies that are packaged as DMG because there is no public API for Nix (hdiutil is
-  # unavailable in Nix, undmg reverse engineers the format, etc.).
+  # unavailable, undmg reverse engineers the format, etc.).
   environment.systemPackages = with pkgs; [
     age
+    (clojure.override { jdk = jdk25_headless; })
     ffmpeg-full
+    inputs.pi.packages.${pkgs.stdenv.hostPlatform.system}.default
     lua54Packages.fennel
     macos-trash
     (maven.override { jdk_headless = jdk25_headless; })
     mediamate
-    meta
     mpv
     nushell
     opus-tools
-    pi-coding-agent
+    pgadmin4
     secretive
     uv
     yt-dlp
 
     # Legacy
-    (clojure.override { jdk = jdk25_headless; })
     fastfetch
     mediainfo
     neovim-unwrapped
@@ -58,8 +58,17 @@
       name = "etrecheckpro";
     }
     {
+      # IINA is packaged as DMG.
+      name = "iina";
+    }
+    {
       # Mac Mouse Fix from packages/mac-mouse-fix.nix disables itself on setting up /Applications/Nix Apps...
       name = "mac-mouse-fix";
+    }
+    {
+      # Meta requires its parent directory to be writable, which /Applications/Nix Apps isn't. We could override the
+      # activation script, but it makes activation take longer.
+      name = "meta";
     }
     {
       # MusicBrainz Picard is packaged as DMG.
@@ -91,31 +100,9 @@
   # Specify how to handle packages with problems.
   nixpkgs.config.problems.handlers.navidrome.broken = "warn";
 
-  # For some reason, Meta needs its parent directory to be writable, otherwise macOS claims that the app is damaged.
-  system.activationScripts.applications.text = pkgs.lib.mkForce ''
-    # Set up applications.
-    targetFolder='/Applications/Nix Apps'
-    echo "setting up ''${targetFolder}..." >&2
-    rm -rf "$targetFolder"
-    mkdir -p "$targetFolder"
-
-    rsyncFlags=(
-      --checksum
-      --copy-unsafe-links
-      --archive
-      --delete
-      --chmod=-w
-      --no-group
-      --no-owner
-      # --chown=kyleerhabor:admin
-    )
-
-    ${pkgs.lib.getExe pkgs.rsync} "''${rsyncFlags[@]}" ${config.system.build.applications}/Applications/ "$targetFolder"
-  '';
-
   # System Defaults
   #
-  # This should be limited to options the user can't set in the system UI.
+  # This should be limited to options the user can't set in the system UI (Finder, System Settings, etc.).
 
   # Sets the speed of the autohide delay.
   system.defaults.dock.autohide-delay = 0.0;
@@ -157,7 +144,6 @@
 
   imports = [
     ./overrides/macos-trash.nix
-    ./overrides/meta.nix
     ./overrides/mpv.nix
   ];
 }

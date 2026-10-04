@@ -47,9 +47,9 @@ in {
     ../modules/overrides/libjxl-0.12.nix
     ../modules/overrides/mediamate.nix
     ../modules/overrides/nushell.nix
-    ../modules/overrides/pi-coding-agent.nix
-    ../modules/overrides/yt-dlp.nix
     ../modules/overrides/secretive.nix
+    ../modules/overrides/vscode.nix
+    ../modules/overrides/yt-dlp.nix
     ./kyles-macbook-pro/servers/caddy.nix
     ./kyles-macbook-pro/servers/komga.nix
     ./kyles-macbook-pro/servers/navidrome.nix

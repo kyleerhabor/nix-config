@@ -1,19 +1,31 @@
 {
   description = "nix-darwin system flake";
   inputs = {
+    # Nixpkgs
+    #
     # nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
 
+    # nix-darwin
+    #
     # nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Home Manager
+    #
     # home-manager.url = "github:nix-community/home-manager";
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    # sops-nix
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Pi
+    pi.url = "github:earendil-works/pi/stable";
+    pi.inputs.nixpkgs.follows = "nixpkgs";
+    pi.inputs.nixpkgs-darwin-x64.follows = "nixpkgs";
   };
   outputs = inputs@{ nix-darwin, home-manager, sops-nix, ... }: {
     # Build darwin flake using:

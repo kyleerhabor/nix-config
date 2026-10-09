@@ -22,6 +22,10 @@
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    # Disks
+    disks.url = "github:kyleerhabor/disks";
+    disks.inputs.nixpkgs.follows = "nixpkgs";
+
     # Pi
     pi.url = "github:earendil-works/pi/stable";
     pi.inputs.nixpkgs.follows = "nixpkgs";

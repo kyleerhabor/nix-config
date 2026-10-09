@@ -46,10 +46,12 @@ in {
     ../modules/overrides/komga.nix
     ../modules/overrides/libjxl-0.12.nix
     ../modules/overrides/mediamate.nix
+    ../modules/overrides/musicbrainz-picard.nix
     ../modules/overrides/nushell.nix
     ../modules/overrides/secretive.nix
     ../modules/overrides/vscode.nix
     ../modules/overrides/yt-dlp.nix
+    ../modules/overrides/zed-editor.nix
     ./kyles-macbook-pro/servers/caddy.nix
     ./kyles-macbook-pro/servers/komga.nix
     ./kyles-macbook-pro/servers/navidrome.nix

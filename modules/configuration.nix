@@ -15,20 +15,29 @@
   # unavailable, undmg reverse engineers the format, etc.).
   environment.systemPackages = with pkgs; [
     age
+    apparency
+    archaeology
     (clojure.override { jdk = jdk25_headless; })
     ffmpeg-full
+    iina
+    inputs.disks.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.pi.packages.${pkgs.stdenv.hostPlatform.system}.default
     lua54Packages.fennel
+    mac-mouse-fix
     macos-trash
     (maven.override { jdk_headless = jdk25_headless; })
     mediamate
     mpv
+    picard
     nushell
     opus-tools
     pgadmin4
     secretive
+    suspicious-package
+    swish
     uv
     yt-dlp
+    zed-editor
 
     # Legacy
     fastfetch
@@ -57,38 +66,21 @@
       # EtreCheckPro is packaged as DMG.
       name = "etrecheckpro";
     }
+    # {
+    #   # Mac Mouse Fix disables itself on setting up /Applications/Nix Apps...
+    #   name = "mac-mouse-fix";
+    # }
     {
-      # IINA is packaged as DMG.
-      name = "iina";
-    }
-    {
-      # Mac Mouse Fix from packages/mac-mouse-fix.nix disables itself on setting up /Applications/Nix Apps...
-      name = "mac-mouse-fix";
-    }
-    {
-      # Meta requires its parent directory to be writable, which /Applications/Nix Apps isn't. We could override the
-      # activation script, but it makes activation take longer.
+      # Meta requires its parent directory to be writable.
       name = "meta";
     }
     {
-      # MusicBrainz Picard is packaged as DMG.
-      name = "musicbrainz-picard";
-    }
-    {
-      # OnyX is packaged as DMG.
+      # OnyX's download URLs are not fixed to the version given.
       name = "onyx";
     }
     {
       # Shottr is packaged as DMG.
       name = "shottr";
-    }
-    {
-      # Suspicious Package is packaged as DMG.
-      name = "suspicious-package";
-    }
-    {
-      # Swish is packaged as DMG.
-      name = "swish";
     }
   ];
 
@@ -143,7 +135,16 @@
   security.pam.services.sudo_local.touchIdAuth = true;
 
   imports = [
+    ./overrides/archaeology.nix
+    ./overrides/iina.nix
+    ./overrides/mac-mouse-fix.nix
     ./overrides/macos-trash.nix
     ./overrides/mpv.nix
+    ./overrides/swish.nix
+    ./overrides/lib/dmg-unpack-hook.nix
+
+    # The following would ideally be in hosts, but their Nixpkgs derivations fixup the apps, breaking them.
+    ./overrides/apparency.nix
+    ./overrides/suspicious-package.nix
   ];
 }

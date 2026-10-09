@@ -7,6 +7,7 @@ in stdenvNoCC.mkDerivation {
     url = "https://github.com/sindresorhus/macos-trash/releases/download/${srcVersion}/trash.zip";
     hash = "sha256-e3sEsAPqsJFrFNlxWU4G65xnW+ZnUFXiE7TOspu9E1U=";
   };
+  dontFixup = true;
   installPhase = ''
     runHook preInstall
     mkdir -p $out/bin

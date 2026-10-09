@@ -9,6 +9,7 @@ in stdenvNoCC.mkDerivation {
     hash = "sha256-WQMugby+HvZL1VwZQsY4/dnovN5sX+7tBbb1Tzkaack=";
     stripRoot = false;
   };
+  dontFixup = true;
   installPhase = ''
     runHook preInstall
     mkdir -p $out/Applications

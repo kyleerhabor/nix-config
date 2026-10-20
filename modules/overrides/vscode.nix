@@ -20,7 +20,7 @@ in {
       system = final.stdenv.hostPlatform.system;
       platform = platformFor system;
     in {
-      vscode = prev.vscode.overrideAttrs (old: {
+      vscode = prev.vscode.overrideAttrs {
         version = "1.140.0";
         src = final.fetchurl {
           name = nameFor platform;
@@ -31,7 +31,7 @@ in {
         postPatch = ''
           chmod +x "${ripgrepFor system}"
         '';
-      });
+      };
     })
   ];
 }

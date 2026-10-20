@@ -1,6 +1,6 @@
 { ... }: {
   nixpkgs.overlays = [
-    (final: _prev: {
+    (final: prev: {
       dmgUnpackHook = final.callPackage ../../../packages/lib/dmg-unpack-hook.nix {};
     })
   ];

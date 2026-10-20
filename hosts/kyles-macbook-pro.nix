@@ -52,6 +52,7 @@ in {
     ../modules/overrides/vscode.nix
     ../modules/overrides/yt-dlp.nix
     ../modules/overrides/zed-editor.nix
+    ../modules/overrides/tailscale-gui.nix
     ./kyles-macbook-pro/servers/caddy.nix
     ./kyles-macbook-pro/servers/komga.nix
     ./kyles-macbook-pro/servers/navidrome.nix

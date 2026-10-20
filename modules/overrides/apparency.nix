@@ -1,6 +1,6 @@
 { ... }: {
   nixpkgs.overlays = [
-    (final: _prev: {
+    (final: prev: {
       apparency = final.callPackage ../../packages/apparency.nix {};
     })
   ];

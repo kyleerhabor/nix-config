@@ -1,6 +1,6 @@
 { ... }: {
   nixpkgs.overlays = [
-    (final: _prev: {
+    (final: prev: {
       archaeology = final.callPackage ../../packages/archaeology.nix {};
     })
   ];

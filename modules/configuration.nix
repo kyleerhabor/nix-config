@@ -36,6 +36,7 @@
     secretive
     suspicious-package
     swish
+    tailscale
     tailscale-gui
     uv
     vscode

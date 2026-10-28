@@ -1,9 +1,9 @@
 { fetchzip, lib, stdenvNoCC }: stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "tailscale-gui";
-  version = "1.104.2";
+  version = "1.104.4";
   src = fetchzip {
     url = "https://pkgs.tailscale.com/stable/Tailscale-${finalAttrs.version}-macos.zip";
-    hash = "sha256-U9UwMpRSereutw5GzvbmeJTfpERO+1W5Az8Ig2QcVHc=";
+    hash = "sha256-S21B5mDsxGVEENSbAuT8vcT4xecGktz3TwvWWTje6JA=";
     stripRoot = false;
   };
   dontFixup = true;
